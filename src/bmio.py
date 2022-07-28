@@ -12,7 +12,7 @@ from data_coerce import initialize_class
 START_DELIMITER = b'\xe2\x94\x90'
 END_DELIMITER = b'\xe2\x94\x94'
 
-class RconObserver:
+class Bmio:
 
     def __init__(self, host, port, password):
         self.sock = self.connect(host, port, password)
@@ -69,7 +69,7 @@ class RconObserver:
 
 
 
-    def handledr(self, event: RconEvent):
+    def handler(self, event: RconEvent):
         """Decorator for registering a handler"""
         def add_handler(event, f):
             """"Register a handler"""

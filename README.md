@@ -2,19 +2,19 @@
 
 Boring Man Rcon Scripting made simple
 
-First initialize the boring man rcon connection.
-`app = Bmio('localhost', 42070, 'admin')`
+```python
+# Create a Bmio
+app = Bmio('localhost', 42070, 'admin')
 
-Then register some events with the provided annotation:
-```
-@app.handledr(RconEvent.log_message)
+# Register a handler
+@app.handler(RconEvent.log_message)
 def do_something(some_data: log_message):
     print(some_data.Message)
+
+# Run it!
+app.run()
 ```
 
-
-And finally, call run() and BMIO handles the rest
-`app.run()`
 
 Voila! You now have an RCON bot that prints out the log messages
 
