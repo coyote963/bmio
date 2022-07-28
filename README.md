@@ -21,5 +21,10 @@ Voila! You now have an RCON bot that prints out the log messages
 Let BMIO handle the type conversions and connection logic, so you have more time to create fun scripts!
 
 ## What's Next
-Completion of type coercions: Flag data, Team information still needs to be completed
+Completion of type coercions: Flag data
+
+Team information still needs to be completed
+
 Gamestate stores for gamemode specific Bmios
+
+Wrappers for command calls
