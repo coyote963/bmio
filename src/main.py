@@ -2,11 +2,33 @@ import random
 
 from time import sleep
 from rcon_model import RconEvent, RconRequest, Command
-from rcon_model.event_types import log_message, player_death, player_get_powerup, request_data_match, request_data_player
+from rcon_model.event_types import chat_message, command_entered, log_message, player_death, player_get_powerup, request_data_match, request_data_player
 from bmio import Bmio
 
 # Create a Bmio
-app = Bmio('localhost', 42070, 'admin')
+app = Bmio()
+
+
+maps = [
+    "maps\\stock\\arctic",
+    "maps\\stock\\arena",
+    "maps\\stock\\city",
+    "maps\\stock\\desert",
+    "maps\\stock\\factory",
+    "maps\\stock\\desertcity",
+    "maps\\stock\\fields",
+    "maps\\stock\\fields_two",
+    "maps\\stock\\lake",
+    "maps\\stock\\mines",
+    "maps\\stock\\railroad",
+    "maps\\stock\\rooftops",
+    "maps\\stock\\sewers",
+    "maps\\stock\\snow",
+    "maps\\stock\\tutorial",
+    "maps\\stock\\throne",
+    "maps\\stock\\warehouse",
+    "maps\\stock\\water",
+]
 
 
 # Register a handler
@@ -15,20 +37,6 @@ def do_something(some_data: log_message):
     '''Print into the console whenever something is written to the logs'''
     print(some_data.Message)
 
-
-
-# Request some data, when it returns callback is called
-@app.handler(RconEvent.log_message)
-def get_info(some_data: log_message):
-    '''Print some information about the server'''
-    def callback(x: request_data_match):
-        print(f'Server Name: {x.ServerName} - Running on: {x.Version}')
-
-    if 'stoptime' in some_data.Message:
-        app.request_data(
-            RconRequest.request_match,
-            callback
-        )
 
 
 # Send a command: Send a message when they die.
@@ -43,23 +51,28 @@ def player_spawn(death_info: player_death):
         'Try again',
         'Uh Oh',
         'Whoa',
-        'Wow'
+        'Wow',
+        'Dont give up!',
     ]))
 
+@app.handler(RconEvent.chat_message)
+def remote_admin(chat: chat_message):
+    if chat.Message.startswith('!'):
+        app.send_request(chat.Message[1:], RconRequest.command)
 
 
-# Send a command when the data is available
-@app.handler(RconEvent.player_get_powerup)
-def someone_got_powerup(powerup_info: player_get_powerup):
-    '''Explodes anyone that gets a powerup'''
-    def callback(player: request_data_player):
-        app.send_command(Command.explodebig, powerup_info.X, powerup_info.Y)
-    
-    app.request_data(
-        RconRequest.request_player,
-        callback,
-        powerup_info.PlayerID
-    )
+@app.handler(RconEvent.chat_message)
+def change_map(chat: chat_message):
+    if chat.Message.startswith('>'):
+        if chat.Message[1:].isnumeric():
+            map_index = int(chat.Message[1:])
+            app.send_command(Command.changemap, maps[map_index])
+
+
+@app.handler(RconEvent.command_entered)
+def command_response(command: command_entered):
+    if command.ReturnText:
+        app.send_command(Command.say, f'{command.ReturnText} [{command.Command}]')
 
 
 # Run it!

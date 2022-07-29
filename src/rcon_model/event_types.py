@@ -460,6 +460,7 @@ class chat_message(BaseClass):
     Profile: PlayerProfile
     Message: str
     Team: str
+    NameColor: str
 
 
 @dataclass

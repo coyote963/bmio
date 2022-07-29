@@ -39,7 +39,7 @@ def is_request_data(message: dict):
 
 def initialize_class(message: dict):
     for k, v in message.items():
-        if k.endswith('Profile') and 'ProfileID' in k and 'StoreID' in k:
+        if k.endswith('Profile') and 'ProfileID' in v and 'StoreID' in v:
             message[k] = event_types.PlayerProfile(**json.loads(v))
     
     # Convert the various strings to their types

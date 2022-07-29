@@ -31,7 +31,7 @@ class Bmio:
     ):
         """An implementation of the Producer Consumer Queue for Rcon Objects."""
         self.sock = self.__connect(host, port, password)
-        self.__send_request(password, RconRequest.login)
+        self.send_request(password, RconRequest.login)
         self.event_handlers = {}
         self.request_handlers = {}
         self.packet_queue = Queue(0)
@@ -77,7 +77,7 @@ class Bmio:
         full_command = command.value
         for arg in args:
             full_command += f' "{arg}"'
-        self.__send_request(full_command, RconRequest.command)
+        self.send_request(full_command, RconRequest.command)
 
 
     def request_data(
@@ -95,7 +95,7 @@ class Bmio:
                     request_params: optional arguments that come with the request 
         """
         request_id = self.__generate_hash()
-        self.__send_request_with_id(
+        self.send_request_with_id(
             request_id,
             request_params,
             request_type
@@ -130,7 +130,7 @@ class Bmio:
                     f(packet)
 
 
-    def __send_request(self, request_data: str, request_type: RconRequest):
+    def send_request(self, request_data: str, request_type: RconRequest):
         """Send a simple request"""
         request_message = request_data + "\00" 
         request = struct.Struct(
@@ -141,7 +141,7 @@ class Bmio:
         self.sock.send(request)
 
 
-    def __send_request_with_id(self, request_id: str, request_params: str, request_type: RconRequest):
+    def send_request_with_id(self, request_id: str, request_params: str, request_type: RconRequest):
         """Send a request that comes with a request id
             Parameters
                 request_id: The unique id associated with this request. Will be returned alongside the data
@@ -149,7 +149,7 @@ class Bmio:
                 request_type: the RconRequest enum of the request
         """
         request_message = f'"{request_id}" "{request_params}"'
-        self.__send_request(request_message, request_type)
+        self.send_request(request_message, request_type)
 
 
     def __start_read(self):
@@ -173,7 +173,7 @@ class Bmio:
                 logger.debug(js)
                 self.packet_queue.put(initialize_class(js))
                 if event_id == RconEvent.rcon_ping.value:
-                    self.__send_request("None", RconRequest.ping)
+                    self.send_request("None", RconRequest.ping)
             buffer += self.sock.recv(1024)
 
 
