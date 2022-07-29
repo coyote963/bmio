@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Optional
 
 from rcon_model import RconEvent, Hat, EnemyRank
@@ -10,6 +10,10 @@ from rcon_model.weapon_types import Weapon
 class BaseClass:
     Time: str
     EventID: RconEvent
+
+    def asdict(self):
+        return {k: str(v) for k, v in asdict(self).items()}
+
 
 @dataclass
 class PlayerProfile:
@@ -344,12 +348,61 @@ class log_message(BaseClass):
     Message: str
     Color: str
 
-
 @dataclass
-class request_data(BaseClass):
-    """Triggered when an RCON client makes a request. See below for more documentation on this RCON event."""
+class RequestDataBase(BaseClass):
     CaseID: str
     RequestID: str
+
+
+@dataclass
+class request_data_match(RequestDataBase):
+    """Triggered when an RCON client makes a request. See below for more documentation on this RCON event."""
+    GamemodeName: str
+    Team1Score: int
+    MaxPlayers: int 
+    MaxScore: int
+    TimeLeft: int
+    TimeStr: str
+    Version: str
+    Map: str
+    MaxTime: int
+    ServerName: int
+    Team2Score: int
+    Players: int
+    Overtime: int
+    # TODO: make a gamemode enum
+    GamemodeID: int
+    
+
+@dataclass
+class request_data_player(RequestDataBase):
+    """Triggered when an RCON client makes a request. See below for more documentation on this RCON event."""
+    ID: str
+    Name: str
+    Color: str
+    Team: str
+    Kills: int
+    Deaths: int
+    Assists: int
+    Score: int
+    Profile: str
+    Store: str
+    Alive: str
+    Bot: str
+    Hat: Hat
+    Hat2: Hat
+    Money: int
+    RespawnCost: int
+    Premium: str
+    
+    GamemodeID: str
+    X: Optional[int] = None
+    Y: Optional[int] = None
+    WeaponsDealRank: Optional[str] = None
+    ClanID: Optional[str] = None
+    ClanTag: Optional[str] = None
+
+    
 
 
 @dataclass
@@ -357,7 +410,7 @@ class command_entered(BaseClass):
     """Triggered when a command is entered into the console."""
     Command: str
     Source: str
-    ReturnText: str
+    ReturnText: Optional[str] = None
 
 
 @dataclass

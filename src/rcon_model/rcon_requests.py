@@ -9,3 +9,4 @@ class RconRequest(Enum):
 	request_match = 5
 	confirm = 6
 	request_scoreboard = 7
+

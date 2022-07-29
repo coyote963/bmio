@@ -4,7 +4,7 @@ from .hat_types import Hat
 from .weapon_types import Weapon
 from .enemy_types import Enemy, EnemyRank
 from .event_types import *
-
+from .command_types import Command
 
 __all__ = [
     'RconEvent',
@@ -13,6 +13,7 @@ __all__ = [
     'Enemy', 
     'EnemyRank', 
     'BaseClass',
+    'Command',
     'PlayerProfile',
     'server_shutdown',
     'lobby_connect',
