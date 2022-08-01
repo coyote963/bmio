@@ -1,9 +1,10 @@
 from dataclasses import dataclass, asdict
 from typing import Optional
 
-from rcon_model import RconEvent, Hat, EnemyRank
-from rcon_model.enemy_types import Enemy
-from rcon_model.weapon_types import Weapon
+from .rcon_events import RconEvent
+from .enemy_types import Enemy, EnemyRank
+from .weapon_types import Weapon
+from .hat_types import Hat
 
 
 @dataclass

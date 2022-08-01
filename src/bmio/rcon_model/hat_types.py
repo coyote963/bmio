@@ -1,8 +1,8 @@
 from enum import Enum, auto
 
-from rcon_model.autoname import AutoName
+from .autoname import AutoName
 
-    
+
 class Hat(AutoName):
     no_hat = auto()
     ballin_cap = auto()

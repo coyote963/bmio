@@ -1,7 +1,6 @@
-from cgitb import strong
 from enum import Enum, auto
 
-from rcon_model.autoname import AutoName
+from .autoname import AutoName
 
 
 class Enemy(AutoName):

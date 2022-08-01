@@ -1,4 +1,4 @@
-from rcon_model.autoname import AutoNameByCount
+from .autoname import AutoNameByCount
 from enum import auto
 
 class Command(AutoNameByCount):

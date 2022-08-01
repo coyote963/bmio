@@ -7,13 +7,13 @@ from threading import Thread
 import json
 from typing import Callable
 
-from rcon_model import RconRequest, RconEvent, RequestDataBase
+from .rcon_model import RconRequest, RconEvent, RequestDataBase
 
 
 from loguru import logger
 
-from data_coerce import initialize_class
-from rcon_model.command_types import Command
+from .data_coerce import initialize_class
+from .rcon_model.command_types import Command
 
 
 START_DELIMITER = b'\xe2\x94\x90'
