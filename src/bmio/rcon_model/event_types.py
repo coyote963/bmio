@@ -5,6 +5,10 @@ from .rcon_events import RconEvent
 from .enemy_types import Enemy, EnemyRank
 from .weapon_types import Weapon
 from .hat_types import Hat
+from .powerup_types import PowerUp
+from .vice_types import Vice
+from .mission_types import Mission
+from .taunt_types import Taunt
 
 
 @dataclass
@@ -129,7 +133,7 @@ class player_get_powerup(BaseClass):
     """Triggers when a player gets a power up"""
     PlayerID: int
     Profile: PlayerProfile
-    PowerUp: str
+    PowerUp: PowerUp
     X: float
     Y: float
 
@@ -469,7 +473,7 @@ class survival_get_vice(BaseClass):
     """Triggers when a player collects a vice in Survival mode."""
     PlayerID: int
     Profile: PlayerProfile
-    ViceID: str
+    ViceID: Vice
     Amount: int
     X: float
     Y: float
@@ -480,7 +484,7 @@ class survival_use_vice(BaseClass):
     """Triggers when a player uses a consumable vice. (Rubbing Alcohol, Smokes, Hot Wings, etc)"""
     PlayerID: int
     Profile: PlayerProfile
-    ViceID: str
+    ViceID: Vice
 
 
 @dataclass
@@ -499,7 +503,7 @@ class player_taunt(BaseClass):
     """Triggers when a player uses a emote, such as /drink or /smoke"""
     PlayerID: int
     Profile: PlayerProfile
-    TauntID: str
+    TauntID: Taunt
 
 
 @dataclass
@@ -508,8 +512,8 @@ class survival_complete_mission(BaseClass):
     PlayerID: int
     Profile: PlayerProfile
     Amount: int
-    Vice: str
-    Type: str
+    Vice: Vice
+    Type: Mission
 
 
 @dataclass
@@ -518,8 +522,8 @@ class survival_take_mission(BaseClass):
     PlayerID: int
     Profile: PlayerProfile
     Amount: int
-    Vice: str
-    Type: str
+    Vice: Vice
+    Type: Mission
 
 
 @dataclass
@@ -528,8 +532,8 @@ class survival_fail_mission(BaseClass):
     PlayerID: int
     Profile: PlayerProfile
     Amount: int
-    Vice: str
-    Type: str
+    Vice: Vice
+    Type: Mission
 
 
 @dataclass
@@ -647,8 +651,8 @@ class player_loadout(BaseClass):
     Weap1: Weapon
     Weap2: Weapon
     Dualwield: str
-    Equip: str
-    OffWeap: str
+    Equip: Weapon
+    OffWeap: Weapon
     OffWeap2: Weapon
 
 
