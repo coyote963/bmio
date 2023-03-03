@@ -1,7 +1,7 @@
 from .autoname import AutoNameByCount
 from enum import auto
 
-class TauntType(AutoNameByCount):
+class Taunt(AutoNameByCount):
     """
     Represents a type of taunt.
     """
