@@ -9,7 +9,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="bmio",
-    version="0.1.9",
+    version="0.2.0",
     author="coyote963",
     author_email="coyoteandbird@gmail.com",
     description="Boring Man Rcon Scripting Library",
